@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +13,7 @@ use App\Http\Controllers;
 |
 */
 
-Route::get('/', 'PostController@main');
+Route::get('/', 'PostController@main')->name('main');
 
 Route::get('/edit/{id}', 'PostController@edit');
 
@@ -30,7 +29,16 @@ Route::get('/create', 'PostController@create');
 
 Route::get('/show/{id}', 'PostController@show');
 
+Route::get('/register', 'Auth\RegisterController@page');
+Route::post('/register', 'Auth\RegisterController@save')->name('register');
 
-Route::get('/register', 'AccountController@register');
+Route::get('/login', 'Auth\LoginController@page');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
 
-Route::get('/login', 'AccountController@login');
+Route::get('/logout', function () {
+    \Illuminate\Support\Facades\Auth::logout();
+    return redirect(\route('main'));
+});
+
+
+
