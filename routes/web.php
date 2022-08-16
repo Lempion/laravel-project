@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PostController@main');
+
+Route::get('/edit/{id}', 'PostController@edit');
+
+Route::get('/security/{id}', 'PostController@security');
+
+Route::get('/status/{id}', 'PostController@status');
+
+Route::get('/media/{id}', 'PostController@media');
+
+Route::get('/delete/{id}', 'PostController@delete');
+
+Route::get('/create', 'PostController@create');
+
+Route::get('/show/{id}', 'PostController@show');
+
+
+Route::get('/register', 'AccountController@register');
+
+Route::get('/login', 'AccountController@login');
