@@ -55,6 +55,11 @@ class PostController extends Controller
         return view('security', ['user' => $user]);
     }
 
+    public function editSecurity(Request $request, $id)
+    {
+        dd($request->all());
+    }
+
     public function status($id)
     {
         $user = UsersService::one($id, route('main'));

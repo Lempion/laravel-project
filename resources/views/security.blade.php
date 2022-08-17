@@ -12,7 +12,8 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="{{ route('editSecurity',$user['id']) }}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -24,19 +25,20 @@
                                 <!-- email -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Email</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="john@example.com">
+                                    <input name="email" type="text" id="simpleinput" class="form-control"
+                                           value="{{ $user['email'] }}">
                                 </div>
 
                                 <!-- password -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Пароль</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input name="password" type="password" id="simpleinput" class="form-control">
                                 </div>
 
                                 <!-- password confirmation-->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Подтверждение пароля</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input name="passwordConfirm" type="password" id="simpleinput" class="form-control">
                                 </div>
 
 
@@ -56,21 +58,16 @@
 @section('script')
     <script>
 
-        $(document).ready(function()
-        {
+        $(document).ready(function () {
 
-            $('input[type=radio][name=contactview]').change(function()
-            {
-                if (this.value == 'grid')
-                {
+            $('input[type=radio][name=contactview]').change(function () {
+                if (this.value == 'grid') {
                     $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-g');
                     $('#js-contacts .col-xl-12').removeClassPrefix('col-xl-').addClass('col-xl-4');
                     $('#js-contacts .js-expand-btn').addClass('d-none');
                     $('#js-contacts .card-body + .card-body').addClass('show');
 
-                }
-                else if (this.value == 'table')
-                {
+                } else if (this.value == 'table') {
                     $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-1');
                     $('#js-contacts .col-xl-4').removeClassPrefix('col-xl-').addClass('col-xl-12');
                     $('#js-contacts .js-expand-btn').removeClass('d-none');

@@ -13,36 +13,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
 Route::get('/', 'PostController@main')->name('main');
-
-Route::get('/edit/{id}', 'PostController@edit');
-Route::post('/edit/{id}', 'PostController@editData')->name('editData');
-
-Route::get('/security/{id}', 'PostController@security');
-
-Route::get('/status/{id}', 'PostController@status');
-
-Route::get('/media/{id}', 'PostController@media');
-
-Route::get('/delete/{id}', 'PostController@delete');
-
-Route::get('/create', 'PostController@create');
-Route::post('/create', 'PostController@addUser')->name('addUser');
 
 Route::get('/show/{id}', 'PostController@show');
 
-Route::get('/register', 'Auth\RegisterController@page');
-Route::post('/register', 'Auth\RegisterController@save')->name('register');
+Route::middleware('auth')->group(function () {
 
-Route::get('/login', 'Auth\LoginController@page');
-Route::post('/login', 'Auth\LoginController@login')->name('login');
+    Route::get('/edit/{id}', 'PostController@edit');
+    Route::post('/edit/{id}', 'PostController@editData')->name('editData');
 
-Route::get('/logout', function () {
-    \Illuminate\Support\Facades\Auth::logout();
-    return redirect(\route('main'));
+    Route::get('/security/{id}', 'PostController@security');
+    Route::post('/security/{id}', 'PostController@editSecurity')->name('editSecurity');
+
+    Route::get('/status/{id}', 'PostController@status');
+
+    Route::get('/media/{id}', 'PostController@media');
+
+    Route::get('/delete/{id}', 'PostController@delete');
+
+    Route::get('/create', 'PostController@create');
+    Route::post('/create', 'PostController@addUser')->name('addUser');
+
+    Route::get('/logout', function () {
+        \Illuminate\Support\Facades\Auth::logout();
+        return redirect(\route('main'));
+    });
 });
+
+Route::middleware('guest')->group(function () {
+
+    Route::get('/register', 'Auth\RegisterController@page');
+    Route::post('/register', 'Auth\RegisterController@save')->name('register');
+
+    Route::get('/login', 'Auth\LoginController@page');
+    Route::post('/login', 'Auth\LoginController@login')->name('login');
+
+});
+
 
 
 
