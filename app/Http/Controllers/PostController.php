@@ -2,38 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\FlashServices;
+use App\Services\UsersService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
+    private $usersService;
+
+    public function __construct(UsersService $usersService)
+    {
+        $this->usersService = $usersService;
+    }
+
     public function main()
     {
-        return view('main');
+        $posts = UsersService::all();
+
+        return view('main', ['posts' => $posts]);
     }
 
     public function edit($id)
     {
-        return view('edit');
+        $user = UsersService::one($id);
+        return view('edit', ['user' => $user]);
     }
 
     public function security($id)
     {
-        return view('security');
+        $user = UsersService::one($id);
+        return view('security', ['user' => $user]);
     }
 
     public function status($id)
     {
-        return view('status');
+        $user = UsersService::one($id);
+        return view('status', ['user' => $user]);
     }
 
     public function media($id)
     {
-        return view('media');
+        $user = UsersService::one($id);
+        return view('media', ['user' => $user]);
     }
 
     public function delete($id)
     {
-        return view('delete');
+        $user = UsersService::one($id);
+        return view('delete', ['user' => $user]);
     }
 
     public function create()
@@ -41,9 +59,38 @@ class PostController extends Controller
         return view('create');
     }
 
+    public function addUser(Request $request)
+    {
+
+        $validateFields = $request->validate([
+            "email" => ['required', 'unique:users', 'email'],
+            "password" => ['required', 'min:4', 'max:20'],
+            "name" => ['string', 'min:4', 'max:25'],
+            "company" => ['string', 'min:4', 'max:50'],
+            "phone" => ['string', 'min:4', 'max:25'],
+            "address" => ['string', 'min:4', 'max:50'],
+            "status" => ['string', 'min:4', 'max:15'],
+            "media" => ['image'],
+            "vk" => ['string', 'min:3', 'max:25'],
+            "tg" => ['string', 'min:3', 'max:25'],
+            "inst" => ['string', 'min:3', 'max:25'],
+        ]);
+
+        $userId = $this->usersService->create($validateFields);
+
+        $validateFields = Arr::except($validateFields, ['email', 'password']);
+
+        $this->usersService->update($validateFields, $userId);
+
+        FlashServices::flash('Пользователь успешно создан');
+
+        return redirect(route('main'));
+    }
+
     public function show($id)
     {
-        return view('show');
+        $user = UsersService::one($id);
+        return view('show', ['user' => $user]);
     }
 
 

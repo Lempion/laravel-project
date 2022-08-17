@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\FlashServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class LoginController extends Controller
             return redirect('/login')->withErrors(['error' => 'Вы ввели не верный адрес почты или пароль']);
         }
 
-        session()->flash('message','Вы успешно авторизовались');
+        FlashServices::flash('Вы успешно авторизовались');
 
         return redirect('/');
 

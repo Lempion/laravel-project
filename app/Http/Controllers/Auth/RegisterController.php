@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\FlashServices;
+use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Validator;
 
 class RegisterController extends Controller
 {
@@ -22,13 +23,10 @@ class RegisterController extends Controller
             'password' => ['required', 'min:4', 'max:20']
         ]);
 
-        $user = User::create([
-            'email' => $validateFields['email'],
-            'password' => Hash::make($validateFields['password'])
-        ]);
+        $user = UsersService::create($validateFields);
 
         if ($user) {
-            session()->flash('message', 'Вы успешно зарегистрировались');
+            FlashServices::flash('Вы успешно зарегистрировались');
 
             return redirect('/login');
         }

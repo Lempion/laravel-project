@@ -26,6 +26,7 @@ Route::get('/media/{id}', 'PostController@media');
 Route::get('/delete/{id}', 'PostController@delete');
 
 Route::get('/create', 'PostController@create');
+Route::post('/create', 'PostController@addUser')->name('addUser');
 
 Route::get('/show/{id}', 'PostController@show');
 
