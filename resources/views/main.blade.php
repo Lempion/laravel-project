@@ -54,10 +54,14 @@
                 <div id="c_{{ $num }}" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="{{ $post['name'] }}">
                     <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                         <div class="d-flex flex-row align-items-center">
+
                                 <span class="status status-{{ $post['status'] }} mr-3">
+                                    <a href="/show/{{ $post['id'] }}">
                                     <span class="rounded-circle profile-image d-block "
                                           style="background-image:url({{ ($post['media'] ?: '/img/avatars/default.png') }}); background-size: cover;"></span>
+                                    </a>
                                 </span>
+
                             <div class="info-card-text flex-1">
                                 <a href="/show/{{ $post['id'] }}" class="fs-xl text-truncate text-truncate-lg text-info"
                                    data-toggle="dropdown" aria-expanded="false">

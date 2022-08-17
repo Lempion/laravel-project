@@ -26,31 +26,31 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('edit', ['user' => $user]);
     }
 
     public function security($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('security', ['user' => $user]);
     }
 
     public function status($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('status', ['user' => $user]);
     }
 
     public function media($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('media', ['user' => $user]);
     }
 
     public function delete($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('delete', ['user' => $user]);
     }
 
@@ -89,9 +89,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $user = UsersService::one($id);
+        $user = UsersService::one($id, route('main'));
         return view('show', ['user' => $user]);
     }
-
-
 }

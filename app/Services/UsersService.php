@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UsersService
 {
@@ -20,10 +21,15 @@ class UsersService
         return User::all()->toArray();
     }
 
-    public static function one($id)
+    public static function one($id, $redirectPath = false)
     {
         if ($user = User::where('id', $id)->first()) {
             return $user->toArray();
+        }
+
+        if ($redirectPath) {
+            header("Location:$redirectPath");
+            exit();
         }
 
         return false;
