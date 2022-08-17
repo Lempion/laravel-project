@@ -12,7 +12,8 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="{{route('editData',$user['id'])}}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -23,28 +24,30 @@
                             <div class="panel-content">
                                 <!-- username -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Иван иванов">
+                                    <label class="form-label" for="simpleinput1">Имя</label>
+                                    <input name="name" type="text" id="simpleinput1" class="form-control"
+                                           value="{{ $user['name'] }}">
                                 </div>
 
                                 <!-- title -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control"
-                                           value="Marlin Веб-разработчик">
+                                    <label class="form-label" for="simpleinput2">Место работы</label>
+                                    <input name="company" type="text" id="simpleinput2" class="form-control"
+                                           value="{{ $user['company'] }}">
                                 </div>
 
                                 <!-- tel -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="8 888 8888 88">
+                                    <label class="form-label" for="simpleinput3">Номер телефона</label>
+                                    <input name="phone" type="text" id="simpleinput3" class="form-control"
+                                           value="{{ $user['phone'] }}">
                                 </div>
 
                                 <!-- address -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control"
-                                           value="Восточные Королевства, Штормград">
+                                    <label class="form-label" for="simpleinput4">Адрес</label>
+                                    <input name="address" type="text" id="simpleinput4" class="form-control"
+                                           value="{{ $user['address'] }}">
                                 </div>
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                     <button class="btn btn-warning">Редактировать</button>

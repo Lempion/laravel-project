@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', 'PostController@main')->name('main');
 
 Route::get('/edit/{id}', 'PostController@edit');
+Route::post('/edit/{id}', 'PostController@editData')->name('editData');
 
 Route::get('/security/{id}', 'PostController@security');
 

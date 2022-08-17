@@ -30,6 +30,25 @@ class PostController extends Controller
         return view('edit', ['user' => $user]);
     }
 
+    public function editData(Request $request, $id)
+    {
+
+//        $this->usersService->checkPermissions($id);
+
+        $validateFields = $request->validate([
+            "name" => ['string', 'min:4', 'max:25'],
+            "company" => ['string', 'min:4', 'max:50'],
+            "phone" => ['string', 'min:4', 'max:25'],
+            "address" => ['string', 'min:4', 'max:50'],
+        ]);
+
+        $this->usersService->update($validateFields, $id);
+
+        FlashServices::flash('Пользователь успешно обновлен');
+
+        return redirect(route('main'));
+    }
+
     public function security($id)
     {
         $user = UsersService::one($id, route('main'));

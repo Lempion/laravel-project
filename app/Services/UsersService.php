@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -57,4 +58,8 @@ class UsersService
         return User::where('id', $id)->update($data);
     }
 
+    public function checkPermissions($changeId)
+    {
+        $user = Auth::user();
+    }
 }
