@@ -17,13 +17,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $validateFields = $request->validate([
+        $authFields = $request->validate([
             'email' => ['required'],
-            'password' => ['required'],
+            'password' => ['required']
+        ]);
+
+        $remember = $request->validate([
             'remember' => ['string']
         ]);
 
-        $res = Auth::attempt($validateFields, (isset($validateFields['remember']) ? true : false));
+        $res = Auth::attempt($authFields, isset($remember));
 
         if (!$res) {
             return redirect('/login')->withErrors(['error' => 'Вы ввели не верный адрес почты или пароль']);

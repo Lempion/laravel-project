@@ -12,6 +12,15 @@
             </h1>
 
         </div>
+        @if($errorsArr = $errors->all())
+            <div class="alert alert-danger">
+
+                @foreach($errorsArr as $error)
+                    {{$error}}<br>
+                @endforeach
+
+            </div>
+        @endif
         <form action="{{ route('editSecurity',$user['id']) }}" method="post">
             @csrf
             <div class="row">
@@ -28,6 +37,8 @@
                                     <input name="email" type="text" id="simpleinput" class="form-control"
                                            value="{{ $user['email'] }}">
                                 </div>
+                                <!-- old email -->
+                                <input type="hidden" value="{{ $user['email'] }}" name="oldEmail">
 
                                 <!-- password -->
                                 <div class="form-group">
@@ -38,7 +49,8 @@
                                 <!-- password confirmation-->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Подтверждение пароля</label>
-                                    <input name="passwordConfirm" type="password" id="simpleinput" class="form-control">
+                                    <input name="password_confirmation" type="password" id="simpleinput"
+                                           class="form-control">
                                 </div>
 
 

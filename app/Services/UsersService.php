@@ -17,9 +17,9 @@ class UsersService
         $this->imagesServices = $imagesServices;
     }
 
-    public static function all(): array
+    public static function all(bool $sortByDesc = true): array
     {
-        return User::all()->toArray();
+        return User::all()->sortBy('id', 0, $sortByDesc)->toArray();
     }
 
     public static function one($id, $redirectPath = false)
@@ -53,6 +53,10 @@ class UsersService
 
             $filePath = $this->imagesServices->upload($data['media']);
             $data['media'] = $filePath;
+        }
+
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
         }
 
         return User::where('id', $id)->update($data);

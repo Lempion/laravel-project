@@ -62,8 +62,8 @@
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="rememberme" name="remember">
-                        <label class="custom-control-label" for="rememberme">Запомнить меня</label>
+                        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+                        <label class="custom-control-label" for="remember">Запомнить меня</label>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-default float-right">Войти</button>

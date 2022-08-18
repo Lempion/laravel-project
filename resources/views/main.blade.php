@@ -68,30 +68,32 @@
                                        class="fs-xl text-truncate text-truncate-lg text-info"
                                        data-toggle="dropdown" aria-expanded="false">
                                         {{ $post['name'] }}
-                                        <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
-                                        <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
+                                        @if($id = \Illuminate\Support\Facades\Auth::id())
+                                            <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
+                                            <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                     </a>
-                                    @if($id = \Illuminate\Support\Facades\Auth::id())
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="/edit/{{ $post['id'] }}">
-                                                <i class="fa fa-edit"></i>
-                                                Редактировать</a>
-                                            <a class="dropdown-item" href="/security/{{ $post['id'] }}">
-                                                <i class="fa fa-lock"></i>
-                                                Безопасность</a>
-                                            <a class="dropdown-item" href="/status/{{ $post['id'] }}">
-                                                <i class="fa fa-sun"></i>
-                                                Установить статус</a>
-                                            <a class="dropdown-item" href="/media/{{ $post['id'] }}">
-                                                <i class="fa fa-camera"></i>
-                                                Загрузить аватар
-                                            </a>
-                                            <a href="#" class="dropdown-item"
-                                               onclick="return confirm('are you sure?');">
-                                                <i class="fa fa-window-close"></i>
-                                                Удалить
-                                            </a>
-                                        </div>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/edit/{{ $post['id'] }}">
+                                            <i class="fa fa-edit"></i>
+                                            Редактировать</a>
+                                        <a class="dropdown-item" href="{{ route('security',$post['id'])  }}">
+                                            <i class="fa fa-lock"></i>
+                                            Безопасность</a>
+                                        <a class="dropdown-item" href="/status/{{ $post['id'] }}">
+                                            <i class="fa fa-sun"></i>
+                                            Установить статус</a>
+                                        <a class="dropdown-item" href="/media/{{ $post['id'] }}">
+                                            <i class="fa fa-camera"></i>
+                                            Загрузить аватар
+                                        </a>
+                                        <a href="#" class="dropdown-item"
+                                           onclick="return confirm('are you sure?');">
+                                            <i class="fa fa-window-close"></i>
+                                            Удалить
+                                        </a>
+                                    </div>
+                                    @else
+                                    </a>
                                     @endif
                                     <span class="text-truncate text-truncate-xl">{{ $post['company'] }}</span>
                                 </div>

@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/{id}', 'PostController@edit');
     Route::post('/edit/{id}', 'PostController@editData')->name('editData');
 
-    Route::get('/security/{id}', 'PostController@security');
+    Route::get('/security/{id}', 'PostController@security')->name('security');
     Route::post('/security/{id}', 'PostController@editSecurity')->name('editSecurity');
 
     Route::get('/status/{id}', 'PostController@status');

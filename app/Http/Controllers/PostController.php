@@ -57,7 +57,26 @@ class PostController extends Controller
 
     public function editSecurity(Request $request, $id)
     {
-        dd($request->all());
+
+        if ($request->password !== null) {
+            $rules['password'] = ['nullable', 'min:4', 'max:20', 'confirmed'];
+        }
+
+        if ($request->email !== $request->oldEmail) {
+            $rules['email'] = ['unique:users', 'email'];
+        }
+
+        if (isset($rules)) {
+            $validateFields = $request->validate($rules);
+
+            $this->usersService->update($validateFields, $id);
+
+            FlashServices::flash('Данные успешно обновлены');
+
+            return redirect(route('main'));
+        }
+
+        return redirect(route('security', $id))->withErrors(['error' => 'Данные не были изменены']);
     }
 
     public function status($id)
