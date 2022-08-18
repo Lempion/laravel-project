@@ -82,7 +82,21 @@ class PostController extends Controller
     public function status($id)
     {
         $user = UsersService::one($id, route('main'));
-        return view('status', ['user' => $user]);
+
+        $arrStatuses = $this->usersService->getCurrentStatusArr($user['status']);
+
+        return view('status', ['user' => $user, 'statuses' => $arrStatuses]);
+    }
+
+    public function editStatus(Request $request, $id)
+    {
+        $validateField = $request->validate(['status' => ['string']]);
+
+        $this->usersService->update($validateField, $id);
+
+        FlashServices::flash('Статус успешно обновлен');
+
+        return redirect(route('main'));
     }
 
     public function media($id)

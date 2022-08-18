@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 class UsersService
 {
-    private $imagesServices;
+    private $imagesServices, $statuses = ['success' => 'Онлайн', 'warning' => 'Отошел', 'danger' => 'Не беспокоить'];
 
     public function __construct(ImagesServices $imagesServices)
     {
@@ -60,6 +61,13 @@ class UsersService
         }
 
         return User::where('id', $id)->update($data);
+    }
+
+    public function getCurrentStatusArr($status): array
+    {
+        $currentStatus = $this->statuses[$status];
+
+        return Arr::prepend(Arr::except($this->statuses, $status), $currentStatus, $status);
     }
 
     public function checkPermissions($changeId)

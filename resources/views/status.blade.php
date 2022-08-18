@@ -12,7 +12,8 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="{{ route('editStatus',$user['id']) }}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -26,10 +27,10 @@
                                         <!-- status -->
                                         <div class="form-group">
                                             <label class="form-label" for="example-select">Выберите статус</label>
-                                            <select class="form-control" id="example-select">
-                                                <option>Онлайн</option>
-                                                <option>Отошел</option>
-                                                <option>Не беспокоить</option>
+                                            <select class="form-control" id="example-select" name="status">
+                                                @foreach($statuses as $status => $statusMessage)
+                                                    <option value="{{ $status }}">{{ $statusMessage }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -50,21 +51,16 @@
 @section('script')
     <script>
 
-        $(document).ready(function()
-        {
+        $(document).ready(function () {
 
-            $('input[type=radio][name=contactview]').change(function()
-            {
-                if (this.value == 'grid')
-                {
+            $('input[type=radio][name=contactview]').change(function () {
+                if (this.value == 'grid') {
                     $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-g');
                     $('#js-contacts .col-xl-12').removeClassPrefix('col-xl-').addClass('col-xl-4');
                     $('#js-contacts .js-expand-btn').addClass('d-none');
                     $('#js-contacts .card-body + .card-body').addClass('show');
 
-                }
-                else if (this.value == 'table')
-                {
+                } else if (this.value == 'table') {
                     $('#js-contacts .card').removeClassPrefix('mb-').addClass('mb-1');
                     $('#js-contacts .col-xl-4').removeClassPrefix('col-xl-').addClass('col-xl-12');
                     $('#js-contacts .js-expand-btn').removeClass('d-none');

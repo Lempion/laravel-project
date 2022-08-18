@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/security/{id}', 'PostController@editSecurity')->name('editSecurity');
 
     Route::get('/status/{id}', 'PostController@status');
+    Route::post('/status/{id}', 'PostController@editStatus')->name('editStatus');
 
     Route::get('/media/{id}', 'PostController@media');
 
