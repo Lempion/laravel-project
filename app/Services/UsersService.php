@@ -13,6 +13,9 @@ class UsersService
 {
     private $imagesServices, $statuses = ['success' => 'Онлайн', 'warning' => 'Отошел', 'danger' => 'Не беспокоить'];
 
+    const GUEST = 1;
+    const ADMIN = 2;
+
     public function __construct(ImagesServices $imagesServices)
     {
         $this->imagesServices = $imagesServices;
@@ -32,6 +35,25 @@ class UsersService
         if ($redirectPath) {
             header("Location:$redirectPath");
             exit();
+        }
+
+        return false;
+    }
+
+    public static function thisUser()
+    {
+        return Auth::user();
+    }
+
+    public static function thisUserAdmin(): bool
+    {
+        return (Auth::user() && Auth::user()->permission == self::ADMIN);
+    }
+
+    public static function userDontHavePermissionForChange($changeId)
+    {
+        if (Auth::id() != $changeId && !self::thisUserAdmin()) {
+            return \redirect(route('main'))->withErrors(['error' => 'Недостаточно прав']);
         }
 
         return false;
@@ -68,10 +90,5 @@ class UsersService
         $currentStatus = $this->statuses[$status];
 
         return Arr::prepend(Arr::except($this->statuses, $status), $currentStatus, $status);
-    }
-
-    public function checkPermissions($changeId)
-    {
-        $user = Auth::user();
     }
 }

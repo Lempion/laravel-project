@@ -19,21 +19,24 @@ class PostController extends Controller
 
     public function main()
     {
-        $posts = UsersService::all();
-
-        return view('main', ['posts' => $posts]);
+        return view('main', ['posts' => UsersService::all(), 'user' => UsersService::thisUser(), 'admin' => UsersService::thisUserAdmin()]);
     }
 
     public function edit($id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $user = UsersService::one($id, route('main'));
         return view('edit', ['user' => $user]);
     }
 
     public function editData(Request $request, $id)
     {
-
-//        $this->usersService->checkPermissions($id);
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
 
         $validateFields = $request->validate([
             "name" => ['string', 'min:4', 'max:25'],
@@ -51,12 +54,19 @@ class PostController extends Controller
 
     public function security($id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $user = UsersService::one($id, route('main'));
         return view('security', ['user' => $user]);
     }
 
     public function editSecurity(Request $request, $id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
 
         if ($request->password !== null) {
             $rules['password'] = ['nullable', 'min:4', 'max:20', 'confirmed'];
@@ -81,6 +91,10 @@ class PostController extends Controller
 
     public function status($id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $user = UsersService::one($id, route('main'));
 
         $arrStatuses = $this->usersService->getCurrentStatusArr($user['status']);
@@ -90,6 +104,10 @@ class PostController extends Controller
 
     public function editStatus(Request $request, $id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $validateField = $request->validate(['status' => ['string']]);
 
         $this->usersService->update($validateField, $id);
@@ -101,12 +119,35 @@ class PostController extends Controller
 
     public function media($id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $user = UsersService::one($id, route('main'));
         return view('media', ['user' => $user]);
     }
 
+    public function editMedia(Request $request, $id)
+    {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
+        $validateImage = $request->validate(["media" => ['required', 'image']]);
+
+        $this->usersService->update($validateImage, $id);
+
+        FlashServices::flash('Аватар успешно обновлен');
+
+        return redirect(route('main'));
+    }
+
     public function delete($id)
     {
+        if ($redirect = UsersService::userDontHavePermissionForChange($id)) {
+            return $redirect;
+        }
+
         $user = UsersService::one($id, route('main'));
         return view('delete', ['user' => $user]);
     }

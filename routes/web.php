@@ -17,6 +17,16 @@ Route::get('/', 'PostController@main')->name('main');
 
 Route::get('/show/{id}', 'PostController@show');
 
+Route::middleware('guest')->group(function () {
+
+    Route::get('/register', 'Auth\RegisterController@page');
+    Route::post('/register', 'Auth\RegisterController@save')->name('register');
+
+    Route::get('/login', 'Auth\LoginController@page');
+    Route::post('/login', 'Auth\LoginController@login')->name('login');
+
+});
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/edit/{id}', 'PostController@edit');
@@ -29,11 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/status/{id}', 'PostController@editStatus')->name('editStatus');
 
     Route::get('/media/{id}', 'PostController@media');
+    Route::post('/media/{id}', 'PostController@editMedia')->name('editMedia');
 
     Route::get('/delete/{id}', 'PostController@delete');
-
-    Route::get('/create', 'PostController@create');
-    Route::post('/create', 'PostController@addUser')->name('addUser');
 
     Route::get('/logout', function () {
         \Illuminate\Support\Facades\Auth::logout();
@@ -41,16 +49,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::middleware('guest')->group(function () {
-
-    Route::get('/register', 'Auth\RegisterController@page');
-    Route::post('/register', 'Auth\RegisterController@save')->name('register');
-
-    Route::get('/login', 'Auth\LoginController@page');
-    Route::post('/login', 'Auth\LoginController@login')->name('login');
-
+Route::middleware('admin')->group(function () {
+    Route::get('/create', 'PostController@create');
+    Route::post('/create', 'PostController@addUser')->name('addUser');
 });
-
-
-
-
