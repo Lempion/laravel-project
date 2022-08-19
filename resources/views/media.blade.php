@@ -12,7 +12,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="{{ route('editMedia',$user['id']) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -22,12 +22,13 @@
                             </div>
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <img src="/img/demo/authors/josh.png" alt="" class="img-responsive" width="200">
+                                    <img src="/{{ ($user['media'] ?: 'img/avatars/default.png') }}" alt=""
+                                         class="img-responsive" width="200">
                                 </div>
-
+                                @csrf
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Выберите аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <input type="file" id="example-fileinput" class="form-control-file" name="media">
                                 </div>
 
 
