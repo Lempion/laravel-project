@@ -69,6 +69,13 @@ class UsersService
         return $user->id;
     }
 
+    public function delete($id)
+    {
+        $this->imagesServices->remove($id);
+
+        User::where('id', $id)->delete();
+    }
+
     public function update($data, $id)
     {
         if (isset($data['media'])) {

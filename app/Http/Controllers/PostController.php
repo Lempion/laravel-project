@@ -148,8 +148,11 @@ class PostController extends Controller
             return $redirect;
         }
 
-        $user = UsersService::one($id, route('main'));
-        return view('delete', ['user' => $user]);
+        $this->usersService->delete($id);
+
+        FlashServices::flash('Пользователь успешно удалён');
+
+        return redirect(route('main'));
     }
 
     public function create()

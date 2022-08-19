@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/media/{id}', 'PostController@media');
     Route::post('/media/{id}', 'PostController@editMedia')->name('editMedia');
 
-    Route::get('/delete/{id}', 'PostController@delete');
+    Route::get('/delete/{id}', 'PostController@delete')->name('delete');
 
     Route::get('/logout', function () {
         \Illuminate\Support\Facades\Auth::logout();
