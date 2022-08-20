@@ -12,6 +12,19 @@
             </h1>
 
         </div>
+        @if( session()->has('message') )
+            <div class="alert alert-success">
+                {{session('message')}}
+            </div>
+        @elseif($errorsArr = $errors->all())
+            <div class="alert alert-danger">
+
+                @foreach($errorsArr as $error)
+                    {{$error}}<br>
+                @endforeach
+
+            </div>
+        @endif
         <form action="{{ route('editMedia',$user['id']) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
